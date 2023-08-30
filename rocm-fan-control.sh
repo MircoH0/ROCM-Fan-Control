@@ -3,7 +3,7 @@
 trap "" 2
 
 smartfan=0
-sf_autotemp=60
+sf_autotemp=65
 sf_inauto=0
 
 function calc_fanspd(){
@@ -36,7 +36,6 @@ do
 		else
 			sf_inauto=0
 			calc_fanspd ${junction_temp%.*}
-			#let fanspd=${junction_temp%.*}-20
 			fanspd=${?}
 			rocm-smi --setfan ${fanspd}"%"
 			sf_info="Smart fan mode : ON (Set to ${fanspd}%)"
