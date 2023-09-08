@@ -53,7 +53,7 @@ do
 
 	echo -e "\n   Junction Temperature : ${junction_temp}c\n   VRAM Temperature : ${vram_temp}c\n   GPU Fan : ${fan_rpm:-"0"} RPM"
 	
-	echo -e "\n________________Set GPU fan speed________________\n\n   0-9 : 0%-90%\n   +/- : Change smart fan trigger temperature\n   [/] : Change info refresh rate\n   F : 100%\n   A : Auto control by display driver\n   S : Switch smart fan mode (ON/OFF)\n   Q : Set to driver control and exit\n   X : Exit\n"
+	echo -e "\n________________Set GPU fan speed________________\n\n   0-9 : 0%-90%\n   +/- : Change smart fan trigger temperature\n   [/] : Change info refresh interval\n   F : 100%\n   A : Auto control by display driver\n   S : Switch smart fan mode (ON/OFF)\n   Q : Set to driver control and exit\n   X : Exit\n"
 	echo -e $sf_info
 	
 	if read -s -t $refresh_time -n1 userinput
