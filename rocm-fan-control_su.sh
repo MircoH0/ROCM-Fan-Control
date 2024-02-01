@@ -15,7 +15,7 @@ function calc_fanspd(){
 
 while true
 do
-	#edge_temp=`sudo sudo rocm-smi -t | grep "edge" | grep -o "[0-9]*.[0-9]$"`
+	#edge_temp=`sudo rocm-smi -t | grep "edge" | grep -o "[0-9]*.[0-9]$"`
 	junction_temp=`sudo rocm-smi -t | grep "junction" | grep -o "[0-9]*.[0-9]$"`
 	vram_temp=`sudo rocm-smi -t | grep "memory" | grep -o "[0-9]*.[0-9]$"`
 	#fan_percent=`sudo rocm-smi -f | grep -o "[0-9]*\%"`
