@@ -102,9 +102,9 @@ do
 			((sf_autotemp-=5))
 			;;
 		[)
-			if (($refresh_time > "1"))
+			if (($refresh_interval > "1"))
 			then
-				((refresh_time-=1))
+				((refresh_interval-=1))
 			fi
 			;;
 		])
