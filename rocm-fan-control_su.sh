@@ -108,7 +108,7 @@ do
 			fi
 			;;
 		])
-			((refresh_time+=1))
+			((refresh_interval+=1))
 			;;
 		*)
 			echo "Wrong input."
