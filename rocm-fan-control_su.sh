@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo -e "\033]0;ROCM-Fan-Control\007"
 trap "echo -e \"\nPress X key to exit\"" 2
 echo -e "\033[?25l"
 
