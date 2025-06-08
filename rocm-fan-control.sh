@@ -10,8 +10,12 @@ sf_autotemp=55
 sf_inauto=0
 
 function calc_fanspd(){
-	spd=$(($1-20))
-	echo $spd
+	local tmp=$(( (4 * $1 - 99) / 3 ))
+	if ((tmp > 100))
+	then
+		tmp=100
+	fi
+	echo $tmp
 }
 
 while true
@@ -50,11 +54,11 @@ do
 	sf_info=$sf_info"\nTrigger temperature : ${sf_autotemp}c\nRefresh interval : ${refresh_interval}s"
 	
 	clear
-	rocm-smi | sed -n 4,7p
+	rocm-smi | sed -n 4,9p
 
 	echo -e "\n   Junction Temperature : ${junction_temp}c\n   VRAM Temperature : ${vram_temp}c\n   GPU Fan : ${fan_rpm:-"0"} RPM"
 	
-	echo -e "\n________________Set GPU fan speed________________\n\n   0-9 : 0%-90%\n   +/- : Change smart fan trigger temperature\n   [/] : Change info refresh interval\n   F : 100%\n   A : Auto control by display driver\n   S : Switch smart fan mode (ON/OFF)\n   Q : Set to driver control and exit\n   X : Exit\n"
+	echo -e "\n________________Set GPU fan speed________________\n   0-9 : 0%-90%\n   +/- : Change smart fan trigger temperature\n   [/] : Change info refresh interval\n   F : 100%\n   A : Auto control by display driver\n   S : Switch smart fan mode (ON/OFF)\n   Q : Set to driver control and exit\n   X : Exit\n"
 	echo -e $sf_info
 	
 	if read -s -t $refresh_interval -n1 userinput
@@ -93,7 +97,7 @@ do
 			;;
 		[qQ])
 			rocm-smi --resetfans > /dev/null
-			sf_insuto=1
+			sf_inauto=1
 			break
 			;;
 		[+=])
@@ -109,7 +113,7 @@ do
 			fi
 			;;
 		])
-			((refresh_interval+=1))
+			((refresh_time+=1))
 			;;
 		*)
 			echo "Wrong input."
@@ -118,3 +122,4 @@ do
 	fi
 done
 echo -e "\033[?25h"
+clear

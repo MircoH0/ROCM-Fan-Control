@@ -1,5 +1,6 @@
 #!/bin/bash
 
+resize -s 26 122 > /dev/null
 echo -e "\033]0;ROCM-Fan-Control\007"
 trap "echo -e \"\nPress X key to exit\"" 2
 echo -e "\033[?25l"
@@ -10,13 +11,17 @@ sf_autotemp=55
 sf_inauto=0
 
 function calc_fanspd(){
-	spd=$(($1-20))
-	echo $spd
+	local tmp=$(( (4 * $1 - 99) / 3 ))
+	if ((tmp > 100))
+	then
+		tmp=100
+	fi
+	echo $tmp
 }
 
 while true
 do
-	#edge_temp=`sudo rocm-smi -t | grep "edge" | grep -o "[0-9]*.[0-9]$"`
+	#edge_temp=`sudo sudo rocm-smi -t | grep "edge" | grep -o "[0-9]*.[0-9]$"`
 	junction_temp=`sudo rocm-smi -t | grep "junction" | grep -o "[0-9]*.[0-9]$"`
 	vram_temp=`sudo rocm-smi -t | grep "memory" | grep -o "[0-9]*.[0-9]$"`
 	#fan_percent=`sudo rocm-smi -f | grep -o "[0-9]*\%"`
@@ -50,7 +55,7 @@ do
 	sf_info=$sf_info"\nTrigger temperature : ${sf_autotemp}c\nRefresh interval : ${refresh_interval}s"
 	
 	clear
-	sudo rocm-smi | sed -n 4,7p
+	sudo rocm-smi | sed -n 4,9p
 
 	echo -e "\n   Junction Temperature : ${junction_temp}c\n   VRAM Temperature : ${vram_temp}c\n   GPU Fan : ${fan_rpm:-"0"} RPM"
 	
@@ -93,7 +98,7 @@ do
 			;;
 		[qQ])
 			sudo rocm-smi --resetfans > /dev/null
-			sf_insuto=1
+			sf_inauto=1
 			break
 			;;
 		[+=])
@@ -118,3 +123,4 @@ do
 	fi
 done
 echo -e "\033[?25h"
+clear
